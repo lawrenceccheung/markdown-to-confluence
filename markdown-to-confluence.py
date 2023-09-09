@@ -5,6 +5,7 @@ import os
 import requests
 import git
 import sys
+import getpass
 
 from confluence import Confluence
 from convert import convtoconf, parse
@@ -94,7 +95,7 @@ def parse_args():
     parser.add_argument(
         '--password',
         dest='password',
-        default=os.getenv('CONFLUENCE_PASSWORD'),
+        default=None, #os.getenv('CONFLUENCE_PASSWORD'),
         help=
         'The password for authentication to Confluence (default: env(\'CONFLUENCE_PASSWORD\'))'
     )
@@ -230,6 +231,8 @@ def deploy_file(post_path, args, confluence):
 
 def main():
     args = parse_args()
+    if args.password is None:
+        args.password = getpass.getpass()
 
     confluence = Confluence(api_url=args.api_url,
                             username=args.username,
