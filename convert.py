@@ -122,12 +122,17 @@ class ConfluenceRenderer(mistune.Renderer):
         return '<h1>Authors</h1><p>{}</p>'.format(author_content)
 
     def block_code(self, code, lang):
-        return textwrap.dedent('''\
+        if lang=='math':
+            return textwrap.dedent('''\
+            <ac:structured-macro ac:name="latex-formatting" ac:schema-version="1" ac:macro-id="87a604f3-7816-420c-bc09-abaf0c576a4e"><ac:plain-text-body><![CDATA[$${c}$$]]></ac:plain-text-body></ac:structured-macro>
+            ''').format(c=code, l=lang or '')
+        else:
+            return textwrap.dedent('''\
             <ac:structured-macro ac:name="code" ac:schema-version="1">
                 <ac:parameter ac:name="language">{l}</ac:parameter>
                 <ac:plain-text-body><![CDATA[{c}]]></ac:plain-text-body>
             </ac:structured-macro>
-        ''').format(c=code, l=lang or '')
+            ''').format(c=code, l=lang or '')
 
     def image(self, src, title, alt_text):
         """Renders an image into XHTML expected by Confluence.
