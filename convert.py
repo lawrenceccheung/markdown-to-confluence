@@ -126,6 +126,10 @@ class ConfluenceRenderer(mistune.Renderer):
             return textwrap.dedent('''\
             <ac:structured-macro ac:name="latex-formatting" ac:schema-version="1" ac:macro-id="87a604f3-7816-420c-bc09-abaf0c576a4e"><ac:plain-text-body><![CDATA[$${c}$$]]></ac:plain-text-body></ac:structured-macro>
             ''').format(c=code, l=lang or '')
+        elif lang=='info':
+            return textwrap.dedent('''\
+            <ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="e9a9c7d8-b4ea-4a45-a1e3-9c27c178e450"><ac:rich-text-body><![CDATA[{c}]]></ac:rich-text-body></ac:structured-macro>
+            ''').format(c=code, l=lang or '')
         else:
             return textwrap.dedent('''\
             <ac:structured-macro ac:name="code" ac:schema-version="1">
